@@ -5,14 +5,14 @@ from datetime import datetime as dt
 from file_writter import file_writer
 
 
-def logger(path, qty_of_log_files=3):
+def logger(path):
     def __logger(old_function):
         def new_function(*args, **kwargs):
             result = old_function(*args, **kwargs)
 
-            for log_num in range(1, qty_of_log_files + 1):
-                file_writer(f"log_{log_num}.log", f"Function: {old_function.__name__}; arguments: {args}, {kwargs}; "
-                                        f"returns: {result}; {dt.now().strftime('(date: %d-%m-%Y, time: %H-%M)')}")
+            file_writer(f"{str(path)}", f"Function: {old_function.__name__}; arguments: {args}, "
+                                        f"{kwargs}; returns: {result}; "
+                                        f"{dt.now().strftime('(date: %d-%m-%Y, time: %H-%M)')}")
 
             return result
 
