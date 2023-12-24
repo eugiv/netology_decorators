@@ -2,20 +2,18 @@ import os
 
 from datetime import datetime as dt
 
+from file_writter import file_writer
+
 
 def logger(old_function):
     def new_function(*args, **kwargs):
-        def file_writer(filename: str, file_content: str):
-            cur_dir = os.getcwd()
-            path = os.path.join(cur_dir, filename)
-            with open(path, 'a', encoding='utf8') as f:
-                f.write(f"{file_content}\n\n")
 
         result = old_function(*args, **kwargs)
 
         file_writer('main.log', f"Function: {old_function.__name__}; arguments: {args}, {kwargs}; "
                                 f"returns: {result}; {dt.now().strftime('(date: %d-%m-%Y, time: %H-%M)')}")
         return result
+
     return new_function
 
 
